@@ -8,20 +8,18 @@ app.config['SECRET_KEY'] = "oh-so-secret"
 
 debug = DebugToolbarExtension(app)
 
-@app.get('/questions/')
+# answer = {}
+
+@app.get('/questions')
 def questions():
-    prompts = request.args['noun']
-
+    prompts = silly_story.prompts
     return render_template("questions.html",
-                           prompts=noun)
+                           prompts = prompts)
 
-
-
-
-    silly_story = Story(
-    ["place", "noun", "verb", "adjective", "plural_noun"],
-
-)
-
-
-
+@app.get('/results')
+def results():
+    # for prompt in prompts:
+    #     prompt_value = request.args["prompt"]
+    #     answer.update({prompt: prompt_value})
+    madlib = silly_story.get_result_text(request.args)
+    return render_template("results.html", madlib = madlib)
